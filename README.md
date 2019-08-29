@@ -2,7 +2,7 @@
 
 # Team Members
 
-Tim Sherman, Alex Powarzynski, Conner Dougherty
+Tim Sherman, Alex Powarzynski, Connor Dougherty
 
 # Project Description
 
