@@ -72,15 +72,18 @@ $(document).ready(function () {
         newPostCard.addClass("card");
         var newPostCardHeading = $("<div>");
         newPostCardHeading.addClass("card-header");
-        var newPostTitle = $("<h2>");
+        var newPostTitle = $("<h1>");
         var newPostDate = $("<h6>");
         // var newPostPhoto = $("<img>");
         // newPostPhoto.attr("alt", "User Photo");
         // newPostPhoto.attr("src", post.photo);
         // newPostPhoto.addClass("photo-style");
         var newPostCategory = $("<p>");
-        newPostCategory.text("Category: " + post.category);
-        newPostCategory.addClass("category-style")
+        newPostCategory.text("Category: " + post.category + " | ");
+        newPostCategory.addClass("category-style");
+        var newPostUser = $("<p>");
+        newPostUser.text(" | User: " + post.User.user);
+        newPostUser.addClass("user-style");
         var newPostCardBody = $("<div>");
         newPostCardBody.addClass("card-body");
         var newPostBody = $("<p>");
@@ -93,6 +96,7 @@ $(document).ready(function () {
         newPostTitle.append(newPostDate);
         newPostCardHeading.append(newPostTitle);
         newPostCardHeading.append(newPostCategory);
+        newPostCardHeading.append(newPostUser);
         newPostCardBody.append(newPostBody);
         // newPostCardBody.append(newPostPhoto);
         newPostCard.append(newPostCardHeading);
