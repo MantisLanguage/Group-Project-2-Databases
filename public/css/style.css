@@ -4,3 +4,23 @@ body {
     background-size: 100vw 100vh;
     background-attachment: fixed;
   }
+
+  #navColor {
+    background-color: #DEB887;
+  }
+
+  .card-header {
+    background-color: #DEB887
+  }
+
+  .category-style {
+    font-size: 13px;
+  }
+
+  #form-collapse-style {
+    background-color: #006400;
+  }
+
+  .card {
+    margin: 20px;
+  }

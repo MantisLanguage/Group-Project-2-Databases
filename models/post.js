@@ -16,6 +16,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     }
+    // photo: {
+    //   type: DataTypes.BLOB,
+    //   allowNull: true
+    // }
   });
 
   Post.associate = function(models) {
