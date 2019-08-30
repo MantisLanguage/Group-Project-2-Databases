@@ -10,11 +10,12 @@ body {
   }
 
   .card-header {
-    background-color: #DEB887
+    background-color: #DEB887;
   }
 
-  .category-style {
+  .category-style, .user-style {
     font-size: 13px;
+    float: left;
   }
 
   #form-collapse-style {
