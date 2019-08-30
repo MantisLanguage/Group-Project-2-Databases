@@ -8,6 +8,9 @@ $(document).ready(function () {
     var categorySelect = $("#input-category");
     var blog = $("#posts-html");
     var posts;
+    var postCategorySelect = $("#category");
+    postCategorySelect.on("change", handleCategoryChange);
+
 
     // Adding an event listener for when the form is submitted
     $(chatForm).on("submit", function handleFormSubmit(event) {
@@ -95,4 +98,45 @@ $(document).ready(function () {
         newPostCard.data("post", post);
         return newPostCard;
     }
+
+
+// ===========================================================
+    function handleCategoryChange() {
+        var newPostCategory = $(this).val();
+        getPosts(newPostCategory);
+    }
+
+
+    function getPosts(category) {
+        var categoryString = category || "";
+        if (categoryString) {
+            categoryString = "/category/" + categoryString;
+        }
+        $.get("/api/posts" + categoryString, function(data) {
+            console.log("Posts", data);
+            posts = data;
+            if (!posts || !posts.length) {
+                displayEmpty();
+            }
+            else {
+                blog.empty();
+                initializeRows();
+            }
+        });
+    }
+
+    function displayEmpty() {
+        blog.empty();
+        var messageH2 = $("<h2>");
+        messageH2.css({ "text-align": "center", "margin-top": "50px" });
+        messageH2.html("No posts yet for this category, navigate <a href='/members'>here</a> in order to create a new post.");
+        blog.append(messageH2);
+    }
+
+
+
+
+
+
+
 });

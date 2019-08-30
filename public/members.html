@@ -23,14 +23,13 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Chat about...
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Pets</a>
-                            <a class="dropdown-item" href="#">Sports</a>
-                        </div>
+
+                        <select class="custom-select" id="category">
+                            <option selected>Categories</option>
+                            <option value="">All</option>
+                            <option value="pets">Pets</option>
+                            <option value="sports">Sports</option>
+                        </select>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Log Out</a>
