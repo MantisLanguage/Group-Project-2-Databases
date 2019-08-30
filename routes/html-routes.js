@@ -33,6 +33,8 @@ module.exports = function(app) {
   });
 
 };
+
+// DON'T DELETE BELOW
 // Requiring our custom middleware for checking if a user is logged in
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 

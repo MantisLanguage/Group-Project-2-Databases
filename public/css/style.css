@@ -4,3 +4,126 @@ body {
     background-size: 100vw 100vh;
     background-attachment: fixed;
   }
+
+
+  #mainBody {
+    background-image: url("https://imgix.bustle.com/rehost/2016/9/13/c525b004-4462-4ef1-ab92-fe6a6995f216.jpeg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70&dpr=2");
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+    background-attachment: fixed;
+  }
+  .credentials{
+    margin-top: 23%;
+  
+  }
+  #greeting{
+    color: white;
+  }
+  #friends{
+   size: 150%;
+  }
+#loginModal{
+  color: white;
+  background-color: green;
+  border: 0;
+
+}
+#newModal{
+  color: white;
+  background-color: green;
+border: 0;
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: center; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 33%;
+  top: 33%;
+  width: 55%; /* Full width */
+  height: 145%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  /* background-color: #DEB887; /* Fallback color */
+  /* background-color:#DEB887; Black w/ opacity */ 
+  color:white;
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+
+/* Modal Content */
+.modal-content {
+  position: center;
+  bottom: 0;
+  background-color: #DEB887;
+  width: 55%;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+  color: red;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.close2 {
+  color: red;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close2:hover,
+.close2:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0} 
+  to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
