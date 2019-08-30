@@ -5,6 +5,25 @@ body {
     background-attachment: fixed;
   }
 
+  #navColor {
+    background-color: #DEB887;
+  }
+
+  .card-header {
+    background-color: #DEB887
+  }
+
+  .category-style {
+    font-size: 13px;
+  }
+
+  #form-collapse-style {
+    background-color: #006400;
+  }
+
+  .card {
+    margin: 20px;
+  }
 
   #mainBody {
     background-image: url("https://imgix.bustle.com/rehost/2016/9/13/c525b004-4462-4ef1-ab92-fe6a6995f216.jpeg?w=970&h=546&fit=crop&crop=faces&auto=format&q=70&dpr=2");
