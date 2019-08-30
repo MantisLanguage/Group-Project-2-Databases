@@ -15,7 +15,16 @@ module.exports = function(sequelize, DataTypes) {
     category: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    likeValue: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false
     }
+    // photo: {
+    //   type: DataTypes.BLOB,
+    //   allowNull: true
+    // }
   });
 
   Post.associate = function(models) {
