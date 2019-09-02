@@ -7,11 +7,12 @@ $(document).ready(function () {
     var chatForm = $("#formBody");
     var categorySelect = $("#input-category");
     var blog = $("#posts-html");
+    var userSearch = $("#userSearch");
     // var photoInput = $("#input-photo");
     var posts;
+    var postSearch;
     var postCategorySelect = $("#category");
     postCategorySelect.on("change", handleCategoryChange);
-
 
     // Adding an event listener for when the form is submitted
     $(chatForm).on("submit", function handleFormSubmit(event) {
@@ -57,6 +58,37 @@ $(document).ready(function () {
             }
         });
     }
+
+    $("#homeButton").on("submit", function handleHome(event) {
+        event.preventDefault();
+        getPostData();
+    });
+
+    $("#searchUser").on("submit", function handleSearch(event) {
+        event.preventDefault();
+
+        blog.empty();
+
+        if (!userSearch.val().trim()) {
+            return;
+        }
+
+        var queryUrl = "/api/posts"
+        $.get(queryUrl, function (data) {
+            if (data) {
+                console.log(data);
+                postSearch = data;
+            }
+        });
+
+        var userPosts = [];
+        for (let i = 0; i < postSearch.length; i++) {
+            if (userSearch.val().trim() === postSearch[i].User.user) {
+                userPosts.push(createNewRow(postSearch[i]))
+            }
+        }
+        blog.append(userPosts.reverse());
+    })
 
     function initializeRows() {
         blog.empty();
@@ -106,7 +138,7 @@ $(document).ready(function () {
     }
 
 
-// ===========================================================
+    // ===========================================================
     function handleCategoryChange() {
         var newPostCategory = $(this).val();
         getPosts(newPostCategory);
@@ -118,7 +150,7 @@ $(document).ready(function () {
         if (categoryString) {
             categoryString = "/category/" + categoryString;
         }
-        $.get("/api/posts" + categoryString, function(data) {
+        $.get("/api/posts" + categoryString, function (data) {
             console.log("Posts", data);
             posts = data;
             if (!posts || !posts.length) {
