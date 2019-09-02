@@ -59,12 +59,14 @@ $(document).ready(function () {
         });
     }
 
-    $("#homeButton").on("submit", function handleHome(event) {
+    $("#homeButton").on("click", function (event) {
         event.preventDefault();
+        $("#category").val("");
         getPostData();
     });
 
-    $("#searchUser").on("submit", function handleSearch() {
+    $("#searchUser").on("submit", function (event) {
+        event.preventDefault();
         var newPostUser = userSearch.val().trim();
         getUserPosts(newPostUser);
     });
