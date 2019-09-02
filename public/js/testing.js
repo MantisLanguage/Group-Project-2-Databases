@@ -64,31 +64,36 @@ $(document).ready(function () {
         getPostData();
     });
 
-    $("#searchUser").on("submit", function handleSearch(event) {
-        event.preventDefault();
+    $("#searchUser").on("submit", function handleSearch() {
+        var newPostUser = userSearch.val().trim();
+        getUserPosts(newPostUser);
+    });
 
-        blog.empty();
-
-        if (!userSearch.val().trim()) {
-            return;
+    function getUserPosts (user) {
+        var userString = user;
+        if (userString) {
+            userString = "/user/" + userString;
         }
-
-        var queryUrl = "/api/posts"
-        $.get(queryUrl, function (data) {
-            if (data) {
-                console.log(data);
-                postSearch = data;
+        $.get("/api/posts" + userString, function (data) {
+            console.log("Posts", data);
+            posts = data;
+            if (!posts || !posts.length) {
+                displayEmptyUser();
+            }
+            else {
+                blog.empty();
+                initializeRows();
             }
         });
+    }
 
-        var userPosts = [];
-        for (let i = 0; i < postSearch.length; i++) {
-            if (userSearch.val().trim() === postSearch[i].User.user) {
-                userPosts.push(createNewRow(postSearch[i]))
-            }
-        }
-        blog.append(userPosts.reverse());
-    })
+    function displayEmptyUser() {
+        blog.empty();
+        var messageH2 = $("<h2>");
+        messageH2.css({ "text-align": "center", "margin-top": "50px" });
+        messageH2.html("No posts yet for this user!");
+        blog.append(messageH2);
+    }
 
     function initializeRows() {
         blog.empty();
