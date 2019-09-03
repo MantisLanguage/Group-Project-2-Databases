@@ -7,11 +7,12 @@ $(document).ready(function () {
     var chatForm = $("#formBody");
     var categorySelect = $("#input-category");
     var blog = $("#posts-html");
+    var userSearch = $("#userSearch");
     // var photoInput = $("#input-photo");
     var posts;
+    var postSearch;
     var postCategorySelect = $("#category");
     postCategorySelect.on("change", handleCategoryChange);
-
 
     // Adding an event listener for when the form is submitted
     $(chatForm).on("submit", function handleFormSubmit(event) {
@@ -58,6 +59,44 @@ $(document).ready(function () {
         });
     }
 
+    $("#homeButton").on("click", function (event) {
+        event.preventDefault();
+        $("#category").val("");
+        getPostData();
+    });
+
+    $("#searchUser").on("submit", function (event) {
+        event.preventDefault();
+        var newPostUser = userSearch.val().trim();
+        getUserPosts(newPostUser);
+    });
+
+    function getUserPosts (user) {
+        var userString = user;
+        if (userString) {
+            userString = "/user/" + userString;
+        }
+        $.get("/api/posts" + userString, function (data) {
+            console.log("Posts", data);
+            posts = data;
+            if (!posts || !posts.length) {
+                displayEmptyUser();
+            }
+            else {
+                blog.empty();
+                initializeRows();
+            }
+        });
+    }
+
+    function displayEmptyUser() {
+        blog.empty();
+        var messageH2 = $("<h2>");
+        messageH2.css({ "text-align": "center", "margin-top": "50px" });
+        messageH2.html("No posts yet for this user!");
+        blog.append(messageH2);
+    }
+
     function initializeRows() {
         blog.empty();
         var postsToAdd = [];
@@ -72,15 +111,18 @@ $(document).ready(function () {
         newPostCard.addClass("card");
         var newPostCardHeading = $("<div>");
         newPostCardHeading.addClass("card-header");
-        var newPostTitle = $("<h2>");
+        var newPostTitle = $("<h1>");
         var newPostDate = $("<h6>");
         // var newPostPhoto = $("<img>");
         // newPostPhoto.attr("alt", "User Photo");
         // newPostPhoto.attr("src", post.photo);
         // newPostPhoto.addClass("photo-style");
         var newPostCategory = $("<p>");
-        newPostCategory.text("Category: " + post.category);
-        newPostCategory.addClass("category-style")
+        newPostCategory.text("Category: " + post.category + " | ");
+        newPostCategory.addClass("category-style");
+        var newPostUser = $("<p>");
+        newPostUser.text(" | User: " + post.User.user);
+        newPostUser.addClass("user-style");
         var newPostCardBody = $("<div>");
         newPostCardBody.addClass("card-body");
         var newPostBody = $("<p>");
@@ -93,6 +135,7 @@ $(document).ready(function () {
         newPostTitle.append(newPostDate);
         newPostCardHeading.append(newPostTitle);
         newPostCardHeading.append(newPostCategory);
+        newPostCardHeading.append(newPostUser);
         newPostCardBody.append(newPostBody);
         // newPostCardBody.append(newPostPhoto);
         newPostCard.append(newPostCardHeading);
@@ -102,7 +145,7 @@ $(document).ready(function () {
     }
 
 
-// ===========================================================
+    // ===========================================================
     function handleCategoryChange() {
         var newPostCategory = $(this).val();
         getPosts(newPostCategory);
@@ -114,7 +157,7 @@ $(document).ready(function () {
         if (categoryString) {
             categoryString = "/category/" + categoryString;
         }
-        $.get("/api/posts" + categoryString, function(data) {
+        $.get("/api/posts" + categoryString, function (data) {
             console.log("Posts", data);
             posts = data;
             if (!posts || !posts.length) {
