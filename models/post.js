@@ -15,11 +15,11 @@ module.exports = function(sequelize, DataTypes) {
     category: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    photo: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
-    // photo: {
-    //   type: DataTypes.BLOB,
-    //   allowNull: true
-    // }
   });
 
   Post.associate = function(models) {
