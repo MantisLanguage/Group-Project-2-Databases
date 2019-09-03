@@ -22,30 +22,34 @@ $(document).ready(function () {
             return;
         }
         // Constructing a newPost object to hand to the database
-        var newPost = {
-            title: titleInput
-                .val()
-                .trim(),
-            body: bodyInput
-                .val()
-                .trim(),
-            category: categorySelect.val()
-            // photo: photoInput.val() || ""
-        };
-        console.log(newPost)
+
+        var file = $("#file").prop("files")[0];
+        var fd = new FormData();
+        fd.append("file", file);
+        fd.append("name", $("#name").val())
+
+        fd.append("title", titleInput
+            .val()
+            .trim());
+        fd.append("body", bodyInput
+            .val()
+            .trim())
+        fd.append("category", categorySelect.val());
 
         // If we're updating a post run updatePost to update a post
         // Otherwise run submitPost to create a whole new post
-        addPhoto();
-        submitPost(newPost);
-    });
-
-    function submitPost(post) {
-        $.post("/api/posts", post, getPostData);
+        $.ajax({
+            url: "/api/posts",
+            type: "post",
+            data: fd,
+            contentType: false,
+            processData: false
+        }).then(getPostData);
+        // $.post("/api/posts", fd, getPostData);
         bodyInput.val("");
         titleInput.val("");
         $("#file").val("");
-    }
+    });
 
     // Gets post data for the current post if we're editing, or if we're adding to an author's existing posts
     function getPostData() {
@@ -57,23 +61,6 @@ $(document).ready(function () {
                 posts = data;
                 initializeRows();
             }
-        });
-    }
-    
-    function addPhoto () {
-        var file = $("#file").prop("files")[0];
-        var fd = new FormData();
-        fd.append("file", file);
-        fd.append("name", $("#name").val())
-
-        $.ajax({
-            url: "/upload/photo",
-            type: "post",
-            data: fd,
-            contentType: false,
-            processData: false
-        }).then(function (res) {
-            console.log(res);
         });
     }
 
@@ -105,7 +92,7 @@ $(document).ready(function () {
         getUserPosts(newPostUser);
     });
 
-    function getUserPosts (user) {
+    function getUserPosts(user) {
         var userString = user;
         if (userString) {
             userString = "/user/" + userString;
@@ -147,10 +134,10 @@ $(document).ready(function () {
         newPostCardHeading.addClass("card-header");
         var newPostTitle = $("<h1>");
         var newPostDate = $("<h6>");
-        // var newPostPhoto = $("<img>");
-        // newPostPhoto.attr("alt", "User Photo");
-        // newPostPhoto.attr("src", post.photo);
-        // newPostPhoto.addClass("photo-style");
+        var newPostPhoto = $("<img>");
+        newPostPhoto.attr("alt", "User Photo");
+        newPostPhoto.attr("src", post.photo);
+        newPostPhoto.addClass("photo-style");
         var newPostCategory = $("<p>");
         newPostCategory.text("Category: " + post.category + " | ");
         newPostCategory.addClass("category-style");
@@ -171,7 +158,7 @@ $(document).ready(function () {
         newPostCardHeading.append(newPostCategory);
         newPostCardHeading.append(newPostUser);
         newPostCardBody.append(newPostBody);
-        // newPostCardBody.append(newPostPhoto);
+        newPostCardBody.append(newPostPhoto);
         newPostCard.append(newPostCardHeading);
         newPostCard.append(newPostCardBody);
         newPostCard.data("post", post);

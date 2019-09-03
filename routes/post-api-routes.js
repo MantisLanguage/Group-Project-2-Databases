@@ -78,8 +78,8 @@ module.exports = function (app) {
       });
   });
   // POST route for saving a new post
-  app.post("/api/posts", isAuthenticated, function (req, res) {
-    db.Post.create({ ...req.body, UserId: req.user.id }).then(function (dbPost) {
+  app.post("/api/posts", isAuthenticated, upload.single('file'), function (req, res) {
+    db.Post.create({ ...req.body, UserId: req.user.id, photo: req.file.path }).then(function (dbPost) {
       res.json(dbPost);
     });
   });
