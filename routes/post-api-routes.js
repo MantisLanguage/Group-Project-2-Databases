@@ -6,6 +6,16 @@
 // Requiring our models
 var db = require("../models");
 var isAuthenticated = require("../config/middleware/isAuthenticated");
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({ storage: storage });
 // Routes
 // =============================================================
 module.exports = function (app) {
@@ -93,4 +103,13 @@ module.exports = function (app) {
       res.json(dbPost);
     });
   });
+  //Uploading photo
+  app.post('/upload/photo', upload.single('file'), (req, res) => {
+    // Define a JSONobject for the image attributes for saving to database
+    console.log(req.file);
+    res.send("Hello!")
+  })
 };
+
+
+

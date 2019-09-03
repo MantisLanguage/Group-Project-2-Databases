@@ -18,8 +18,9 @@ body {
     float: left;
   }
 
-  #form-collapse-style {
+  #form-collapse-style, .btn-style {
     background-color: #006400;
+    color: white;
   }
 
   .card {
