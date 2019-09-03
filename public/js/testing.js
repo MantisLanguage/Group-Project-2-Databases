@@ -36,6 +36,7 @@ $(document).ready(function () {
 
         // If we're updating a post run updatePost to update a post
         // Otherwise run submitPost to create a whole new post
+        addPhoto();
         submitPost(newPost);
     });
 
@@ -43,7 +44,7 @@ $(document).ready(function () {
         $.post("/api/posts", post, getPostData);
         bodyInput.val("");
         titleInput.val("");
-        // photoInput.val("");
+        $("#file").val("");
     }
 
     // Gets post data for the current post if we're editing, or if we're adding to an author's existing posts
@@ -57,6 +58,39 @@ $(document).ready(function () {
                 initializeRows();
             }
         });
+    }
+    
+    function addPhoto () {
+        var file = $("#file").prop("files")[0];
+        var fd = new FormData();
+        fd.append("file", file);
+        fd.append("name", $("#name").val())
+
+        $.ajax({
+            url: "/upload/photo",
+            type: "post",
+            data: fd,
+            contentType: false,
+            processData: false
+        }).then(function (res) {
+            console.log(res);
+        });
+    }
+
+    $("#file").on("change", function () {
+        readURL(this);
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#img").attr("src", e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 
     $("#homeButton").on("click", function (event) {
