@@ -127,6 +127,10 @@ border: 0;
   background-color: #5cb85c;
   color: white;
 }
+.photo-style{
+  height: 300px;
+  width: 400px;
+}
 
 /* Add Animation */
 @-webkit-keyframes slideIn {
