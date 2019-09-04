@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-const upload = multer({ storage: storage });
+const upload = multer({ dest: "images/" });
 // Routes
 // =============================================================
 module.exports = function (app) {
@@ -79,7 +79,12 @@ module.exports = function (app) {
   });
   // POST route for saving a new post
   app.post("/api/posts", isAuthenticated, upload.single('file'), function (req, res) {
-    db.Post.create({ ...req.body, UserId: req.user.id, photo: req.file.path }).then(function (dbPost) {
+    console.log(req.file);
+    let photo;
+    if (req.file) {
+      photo = req.file.path
+    }
+    db.Post.create({ ...req.body, UserId: req.user.id, photo: photo }).then(function (dbPost) {
       res.json(dbPost);
     });
   });
