@@ -139,6 +139,7 @@ border: 0;
   height: 300px;
   width: 400px;
 }
+
 /* Add Animation */
 @-webkit-keyframes slideIn {
   from {bottom: -300px; opacity: 0} 

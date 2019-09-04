@@ -136,7 +136,7 @@ $(document).ready(function () {
 
         let likeValue = $(`<p id= 'like-style' style="float: right"> ${post.likeValue} </p>`);
         console.log(post.likeValue);
-        let likeBtn = $("<button style='float: right' class='btn btn-small' id='like'><i class='far fa-thumbs-up'></i></button>");
+        let likeBtn = $("<button style='float: right' class='btn btn-large' id='like'><i class='fas fa-mug-hot'></i></i></button>");
         $(likeBtn).attr("data-id", post.id);
         $(likeBtn).attr("data-numb", post.likeValue);
         $(likeBtn).attr("data-like", false);
