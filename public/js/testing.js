@@ -134,14 +134,15 @@ $(document).ready(function () {
         var newPostTitle = $("<h1>");
         var newPostDate = $("<h6>");
 
-        let likeValue = $(`<h3> ${post.likeValue} </h3>`);
+        let likeValue = $(`<p id= 'like-style' style="float: right"> ${post.likeValue} </p>`);
         console.log(post.likeValue);
-        let likeBtn = $("<button class = 'btn btn-secondary' id='like'>Like</button>");
+        let likeBtn = $("<button style='float: right' class='btn btn-small' id='like'><i class='far fa-thumbs-up'></i></button>");
         $(likeBtn).attr("data-id", post.id);
         $(likeBtn).attr("data-numb", post.likeValue);
-        let dislikeBtn = $("<button class = 'btn btn-secondary' id='dislike'>Dislike</button>");
-        $(dislikeBtn).attr("data-id", post.id);
-        $(dislikeBtn).attr("data-numb", post.likeValue);
+        $(likeBtn).attr("data-like", false);
+        // let dislikeBtn = $("<button class='btn btn-small' id='dislike'><i class='far fa-thumbs-down'></i></button>");
+        // $(dislikeBtn).attr("data-id", post.id);
+        // $(dislikeBtn).attr("data-numb", post.likeValue);
 
         var newPostPhoto = $("<img>");
         newPostPhoto.attr("alt", "User Photo");
@@ -157,7 +158,7 @@ $(document).ready(function () {
         newPostCardBody.addClass("card-body");
         var newPostBody = $("<p>");
         newPostTitle.text(post.title);
-        newPostTitle.addClass("title-style")
+        newPostTitle.addClass("title-style");
         newPostBody.text(post.body);
         var formattedDate = new Date(post.createdAt);
         formattedDate = moment(formattedDate).format("MM/DD/YYYY, hh:mm");
@@ -165,7 +166,7 @@ $(document).ready(function () {
         newPostTitle.append(newPostDate);
 
         newPostTitle.append(likeValue);
-        newPostTitle.append(dislikeBtn);
+        // newPostTitle.append(dislikeBtn);
         newPostTitle.append(likeBtn);
 
         newPostCardHeading.append(newPostTitle);
@@ -214,21 +215,18 @@ $(document).ready(function () {
 
 //=============================================================================================
     $(document).on("click", "#like", like);
-    $(document).on("click", "#dislike", dislike);
+    // $(document).on("click", "#dislike", dislike);
 
-    let liked = false;
-    let disliked = false;
+    let liked = $("#like").attr("data-like");
 
+
+    // let disliked = false;
     function like() {
-        // console.log($(this).attr("data-id"));
-        let likeValue = $(this).attr("data-numb");
-        console.log(likeValue);
-        let newLikeValue = parseInt(likeValue);
-        let id = $(this).attr("data-id");
-        if (liked) {
-            alert("You can't like this again")
-        }
-        if (!liked && !disliked) {
+            let likeValue = $(this).attr("data-numb");
+            console.log(likeValue);
+            let newLikeValue = parseInt(likeValue);
+            let id = $(this).attr("data-id");
+        if (!liked) {
             newLikeValue++;
             $.ajax({
                 url: "/api/posts/" + id,
@@ -239,69 +237,106 @@ $(document).ready(function () {
             }).then(function () {
                 getPostData();
                 liked = true;
-                disliked = false;
             });
         }
-        if (!liked && disliked) {
-            newLikeValue++;
-            newLikeValue++;
-            $.ajax({
-                url: "/api/posts/" + id,
-                method: "PUT",
-                data: {
-                    likeValue: newLikeValue
-                }
-            }).then(function () {
-                getPostData();
-                liked = true;
-                disliked = false;
-            });
-        }
+        // if (liked) {
+        //     newLikeValue--;
+        //     $.ajax({
+        //         url: "/api/posts/" + id,
+        //         method: "PUT",
+        //         data: {
+        //             likeValue: newLikeValue
+        //         }
+        //     }).then(function () {
+        //         getPostData();
+        //         liked = false;
+        //     });
+        // }
     }
 
-    function dislike() {
-        // console.log(this.data-id);
-        let likeValue = $(this).attr("data-numb");
 
-        let newLikeValue = parseInt(likeValue);
-        console.log(newLikeValue);
-        let id = $(this).attr("data-id");
-        if (!disliked && !liked) {
-            newLikeValue--;
-            $.ajax({
-                url: "/api/posts/" + id,
-                method: "PUT",
-                data: {
-                    likeValue: newLikeValue
-                }
-            }).then(function () {
-                getPostData();
-                disliked = true;
-                liked = false;
+    // function like() {
+    //     // console.log($(this).attr("data-id"));
+    //     let likeValue = $(this).attr("data-numb");
+    //     console.log(likeValue);
+    //     let newLikeValue = parseInt(likeValue);
+    //     let id = $(this).attr("data-id");
+    //     if (liked) {
+    //         alert("You can't like this again")
+    //     }
+    //     if (!liked && !disliked) {
+    //         newLikeValue++;
+    //         $.ajax({
+    //             url: "/api/posts/" + id,
+    //             method: "PUT",
+    //             data: {
+    //                 likeValue: newLikeValue
+    //             }
+    //         }).then(function () {
+    //             getPostData();
+    //             liked = true;
+    //             disliked = false;
+    //         });
+    //     }
+    //     if (!liked && disliked) {
+    //         newLikeValue++;
+    //         newLikeValue++;
+    //         $.ajax({
+    //             url: "/api/posts/" + id,
+    //             method: "PUT",
+    //             data: {
+    //                 likeValue: newLikeValue
+    //             }
+    //         }).then(function () {
+    //             getPostData();
+    //             liked = true;
+    //             disliked = false;
+    //         });
+    //     }
+    // }
 
-            })
-        }
-        if (!disliked && liked) {
-            newLikeValue--;
-            newLikeValue--;
-            $.ajax({
-                url: "/api/posts/" + id,
-                method: "PUT",
-                data: {
-                    likeValue: newLikeValue
-                }
-            }).then(function () {
-                getPostData();
-                disliked = true;
-                liked = false;
-
-            })
-        }
-        if (disliked) {
-            alert("You can't dislike this again")
-        }
-    }
-
+    // function dislike() {
+    //     // console.log(this.data-id);
+    //     let likeValue = $(this).attr("data-numb");
+    //
+    //     let newLikeValue = parseInt(likeValue);
+    //     console.log(newLikeValue);
+    //     let id = $(this).attr("data-id");
+    //     if (!disliked && !liked) {
+    //         newLikeValue--;
+    //         $.ajax({
+    //             url: "/api/posts/" + id,
+    //             method: "PUT",
+    //             data: {
+    //                 likeValue: newLikeValue
+    //             }
+    //         }).then(function () {
+    //             getPostData();
+    //             disliked = true;
+    //             liked = false;
+    //
+    //         })
+    //     }
+    //     if (!disliked && liked) {
+    //         newLikeValue--;
+    //         newLikeValue--;
+    //         $.ajax({
+    //             url: "/api/posts/" + id,
+    //             method: "PUT",
+    //             data: {
+    //                 likeValue: newLikeValue
+    //             }
+    //         }).then(function () {
+    //             getPostData();
+    //             disliked = true;
+    //             liked = false;
+    //
+    //         })
+    //     }
+    //     if (disliked) {
+    //         alert("You can't dislike this again")
+    //     }
+    // }
 
 
 })

@@ -128,6 +128,13 @@ border: 0;
   color: white;
 }
 
+#like-style {
+  font-size: 25px;
+}
+.photo-style {
+  height: 300px;
+  width: 400px;
+}
 /* Add Animation */
 @-webkit-keyframes slideIn {
   from {bottom: -300px; opacity: 0} 

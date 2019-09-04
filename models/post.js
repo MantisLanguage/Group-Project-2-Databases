@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     photo: {
       type: DataTypes.STRING,
-      defaultValue: "images/1x1.png",
+      defaultValue: "/images/pine-forest-tree-silhouette-pine-forest-mask-jpg-pejrzo-clipart.jpg",
       allowNull: false
     },
     likeValue: {
