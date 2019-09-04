@@ -34,7 +34,7 @@ body {
     background-attachment: fixed;
   }
   .credentials{
-    margin-top: 23%;
+    margin-top: 33%;
   
   }
   #greeting{
@@ -126,6 +126,10 @@ border: 0;
   padding: 2px 16px;
   background-color: #5cb85c;
   color: white;
+}
+.photo-style{
+  height: 300px;
+  width: 400px;
 }
 
 #like-style {
