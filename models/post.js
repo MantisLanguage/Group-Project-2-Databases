@@ -20,6 +20,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       defaultValue: "images/1x1.png",
       allowNull: false
+    },
+    likeValue: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false
     }
   });
 

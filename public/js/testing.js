@@ -102,8 +102,7 @@ $(document).ready(function () {
             posts = data;
             if (!posts || !posts.length) {
                 displayEmptyUser();
-            }
-            else {
+            } else {
                 blog.empty();
                 initializeRows();
             }
@@ -113,7 +112,7 @@ $(document).ready(function () {
     function displayEmptyUser() {
         blog.empty();
         var messageH2 = $("<h2>");
-        messageH2.css({ "text-align": "center", "margin-top": "50px" });
+        messageH2.css({"text-align": "center", "margin-top": "50px"});
         messageH2.html("No posts yet for this user!");
         blog.append(messageH2);
     }
@@ -134,6 +133,16 @@ $(document).ready(function () {
         newPostCardHeading.addClass("card-header");
         var newPostTitle = $("<h1>");
         var newPostDate = $("<h6>");
+
+        let likeValue = $(`<h3> ${post.likeValue} </h3>`);
+        console.log(post.likeValue);
+        let likeBtn = $("<button class = 'btn btn-secondary' id='like'>Like</button>");
+        $(likeBtn).attr("data-id", post.id);
+        $(likeBtn).attr("data-numb", post.likeValue);
+        let dislikeBtn = $("<button class = 'btn btn-secondary' id='dislike'>Dislike</button>");
+        $(dislikeBtn).attr("data-id", post.id);
+        $(dislikeBtn).attr("data-numb", post.likeValue);
+
         var newPostPhoto = $("<img>");
         newPostPhoto.attr("alt", "User Photo");
         newPostPhoto.attr("src", post.photo);
@@ -154,6 +163,11 @@ $(document).ready(function () {
         formattedDate = moment(formattedDate).format("MM/DD/YYYY, hh:mm");
         newPostDate.text(formattedDate);
         newPostTitle.append(newPostDate);
+
+        newPostTitle.append(likeValue);
+        newPostTitle.append(dislikeBtn);
+        newPostTitle.append(likeBtn);
+
         newPostCardHeading.append(newPostTitle);
         newPostCardHeading.append(newPostCategory);
         newPostCardHeading.append(newPostUser);
@@ -183,8 +197,7 @@ $(document).ready(function () {
             posts = data;
             if (!posts || !posts.length) {
                 displayEmpty();
-            }
-            else {
+            } else {
                 blog.empty();
                 initializeRows();
             }
@@ -194,15 +207,102 @@ $(document).ready(function () {
     function displayEmpty() {
         blog.empty();
         var messageH2 = $("<h2>");
-        messageH2.css({ "text-align": "center", "margin-top": "50px" });
+        messageH2.css({"text-align": "center", "margin-top": "50px"});
         messageH2.html("No posts yet for this category, navigate <a href='/members'>here</a> in order to create a new post.");
         blog.append(messageH2);
     }
 
+//=============================================================================================
+    $(document).on("click", "#like", like);
+    $(document).on("click", "#dislike", dislike);
+
+    let liked = false;
+    let disliked = false;
+
+    function like() {
+        // console.log($(this).attr("data-id"));
+        let likeValue = $(this).attr("data-numb");
+        console.log(likeValue);
+        let newLikeValue = parseInt(likeValue);
+        let id = $(this).attr("data-id");
+        if (liked) {
+            alert("You can't like this again")
+        }
+        if (!liked && !disliked) {
+            newLikeValue++;
+            $.ajax({
+                url: "/api/posts/" + id,
+                method: "PUT",
+                data: {
+                    likeValue: newLikeValue
+                }
+            }).then(function () {
+                getPostData();
+                liked = true;
+                disliked = false;
+            });
+        }
+        if (!liked && disliked) {
+            newLikeValue++;
+            newLikeValue++;
+            $.ajax({
+                url: "/api/posts/" + id,
+                method: "PUT",
+                data: {
+                    likeValue: newLikeValue
+                }
+            }).then(function () {
+                getPostData();
+                liked = true;
+                disliked = false;
+            });
+        }
+    }
+
+    function dislike() {
+        // console.log(this.data-id);
+        let likeValue = $(this).attr("data-numb");
+
+        let newLikeValue = parseInt(likeValue);
+        console.log(newLikeValue);
+        let id = $(this).attr("data-id");
+        if (!disliked && !liked) {
+            newLikeValue--;
+            $.ajax({
+                url: "/api/posts/" + id,
+                method: "PUT",
+                data: {
+                    likeValue: newLikeValue
+                }
+            }).then(function () {
+                getPostData();
+                disliked = true;
+                liked = false;
+
+            })
+        }
+        if (!disliked && liked) {
+            newLikeValue--;
+            newLikeValue--;
+            $.ajax({
+                url: "/api/posts/" + id,
+                method: "PUT",
+                data: {
+                    likeValue: newLikeValue
+                }
+            }).then(function () {
+                getPostData();
+                disliked = true;
+                liked = false;
+
+            })
+        }
+        if (disliked) {
+            alert("You can't dislike this again")
+        }
+    }
 
 
 
-
-
-
-});
+})
+;
