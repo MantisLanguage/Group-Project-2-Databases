@@ -18,7 +18,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     photo: {
       type: DataTypes.STRING,
-      allowNull: true
+      defaultValue: "images/1x1.png",
+      allowNull: false
     }
   });
 
